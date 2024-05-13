@@ -1,0 +1,30 @@
+<configuration>
+    <appender name ="ConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSSS} [%thread] %-5level %logger{50}.%M --%msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name ="FileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>
+            authorization.log
+        </file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>authorization-%d{yy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>100MB</maxFileSize>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSSS} [%thread] %-5level %logger{50}.%M --%msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level ="INFO">
+        <appender-ref ref="ConsoleAppender"/>
+        <appender-ref ref="FileAppender"/>
+    </root>
+</configuration>
