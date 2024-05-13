@@ -4,6 +4,7 @@ import com.github.authorization.controller.request.AuthenticationReq;
 import com.github.authorization.controller.request.RegisterReq;
 import com.github.authorization.controller.response.AuthenticationRes;
 import com.github.authorization.service.AuthenticationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/auth")
+@Slf4j
 public class AuthenticationController {
 
     @Autowired
@@ -21,12 +23,14 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<AuthenticationRes> register (
             @RequestBody RegisterReq req) {
+        log.info("Registering user");
         return ResponseEntity.ok(authenticationService.register(req));
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationRes> authenticate(
             @RequestBody AuthenticationReq req) {
+        log.info("Authenticating user: {}", req.getEmail());
         return ResponseEntity.ok(authenticationService.authenticate(req));
     }
 }

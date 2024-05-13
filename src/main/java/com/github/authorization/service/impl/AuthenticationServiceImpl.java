@@ -8,6 +8,7 @@ import com.github.authorization.dto.CreateUserAccountDto;
 import com.github.authorization.service.AuthenticationService;
 import com.github.authorization.service.JwtService;
 import com.github.authorization.service.UserAccountService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
@@ -28,6 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationRes register(RegisterReq registerReq) {
+        log.info("Registering user with email: {}", registerReq.getEmail());
         CreateUserAccountDto createUserAccountDto = new CreateUserAccountDto();
         createUserAccountDto.setFirstname(registerReq.getFirstname());
         createUserAccountDto.setLastname(registerReq.getLastname());
@@ -45,6 +48,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthenticationRes authenticate(AuthenticationReq authenticationReq) {
+        log.info("Authenticating user with email: {}", authenticationReq.getEmail());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         authenticationReq.getEmail(),
